@@ -3,7 +3,7 @@ const express = require("express");
 const morgan = require("morgan");
 require("dotenv").config();
 const app = express();
-const conectarDB = require("./database/db");
+// const conectarDB = require("./database/db");
 
 //middleware
 app.use(cors());
@@ -13,6 +13,7 @@ app.use(express.urlencoded({extended: false}));
 app.use(morgan("dev"));
 
 const port = process.env.PORT;
+
 app.get("/",(req, res)=>{
     return res.send("holiwi")
 })
