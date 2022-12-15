@@ -1,1 +1,1 @@
-console.log("holiwi")
+console.log("holiwi chikistrikis")
