@@ -23,7 +23,7 @@ const USerSchema = new mongoose.Schema({
     estado:{ // validacion de estado, true (Activo) o false (inactivo)
         type:Boolean,
         default:true,
-        require:true
+        enum:[true, false]
     },
     rol:{
         type:String,

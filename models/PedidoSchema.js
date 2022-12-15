@@ -22,3 +22,6 @@ const PedidoSchema = new mongoose.Schema({
         enum:['pendiente', 'confirmado', 'cancelado']
     },
 })
+
+const Pedido = mongoose.model('Pedido', PedidoSchema);
+module.exports = Pedido;
