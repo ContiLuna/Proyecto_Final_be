@@ -1,4 +1,4 @@
-const Menu = require('../models/menuModel');
+const Menu = require('../models/MenuSchema');
 const mongoose = require('mongoose');
 
 
