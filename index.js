@@ -6,6 +6,7 @@ const app = express();
 const conectarDB = require("./database/db");
 const router = require("./routes/index");
 
+
 //middleware
 app.use(cors());
 app.options("*", cors());
