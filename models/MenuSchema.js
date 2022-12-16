@@ -29,7 +29,7 @@ const MenuSchema = new mongoose.Schema({
         required:true,
     },
     categoria:{
-        type:mongoose.Schema.Types.ObjectId, // validacion de categoria, solo texto
+        type:mongoose.Schema.Types.ObjectId,
         ref: 'Categoria',
         require:true,
         trim:true
