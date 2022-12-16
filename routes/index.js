@@ -22,7 +22,7 @@ router.post('/menu', upload.single("image"), createMenu);
 router.delete('/menu/:id', deleteMenu);
 router.put('/menu/:id', updateMenu);
 
-// // rutas para pedidos
+// rutas para pedidos
 // router.get('/pedido', getPedido);
 router.get('/pedido/:id', getPedidoByID);
 router.post('/pedido', createPedido);
