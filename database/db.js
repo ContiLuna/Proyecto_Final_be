@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 
 const conectarDB = async () => {
     try {
-        await mongoose.set('strictQuery', false);
         await mongoose.connect(process.env.CONNECT_DB, {
             dbName: "proyectoFinal",
             useNewUrlParser: true,
