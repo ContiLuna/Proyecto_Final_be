@@ -48,7 +48,7 @@ const getMenuByID = async(req, res)=>{
 
 // crear menu
 const createMenu = async (req, res) => {
-    const { nombre,estado ,  precio, detalle } = req.body; // destructuring sin la imagen porque viene en un fil
+    const { nombre, estado, precio, detalle, categoria } = req.body; // destructuring sin la imagen porque viene en un fil
     const { path } = req.file;                             // destructuring para obtener la ruta de la imagen 
     const menuExist = await Menu.findOne({nombre});
     const cloudImg = await cloudinary.uploader.upload(path);
@@ -66,7 +66,8 @@ const createMenu = async (req, res) => {
             estado,
             precio,
             detalle,
-            image: cloudImg.secure_url
+            image: cloudImg.secure_url,
+            categoria
         })
 
         await newMenu.save()
