@@ -5,6 +5,8 @@ require("dotenv").config();
 const app = express();
 const conectarDB = require("./database/db");
 const router = require("./routes/index");
+const passport = require("passport");
+const jwtStrategy = require("./passport/jwt");
 
 
 //middleware
@@ -13,6 +15,8 @@ app.options("*", cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(morgan("dev"));
+
+passport.use("jwt", jwtStrategy);
 
 app.use("/", router);
 
