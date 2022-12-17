@@ -29,8 +29,7 @@ const MenuSchema = new mongoose.Schema({
         required:true,
     },
     categoria:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref: 'Categoria',
+        type:String, 
         require:true,
         trim:true
     }

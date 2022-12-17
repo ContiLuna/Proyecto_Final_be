@@ -53,7 +53,6 @@ const createMenu = async (req, res) => {
     const { path } = req.file;                             // destructuring para obtener la ruta de la imagen 
     const menuExist = await Menu.findOne({nombre});
     const cloudImg = await cloudinary.uploader.upload(path);
-    const categoriaID = await Categoria.findById(categoria);
 
 
     console.log("cloudImg", cloudImg)
@@ -71,7 +70,7 @@ const createMenu = async (req, res) => {
             precio,
             detalle,
             image: cloudImg.secure_url,
-            categoria: categoriaID
+            categoria
         })
 
         await newMenu.save()
@@ -91,7 +90,6 @@ const createMenu = async (req, res) => {
 const updateMenu = async(req, res)=>{
     const {id} = req.params;
     const {nombre, estado,precio, detalle, categoria} = req.body; 
-    const categoriaID = await Categoria.findById(categoria); 
 
     try {
         if(!mongoose.isValidObjectId(id)){
@@ -99,7 +97,7 @@ const updateMenu = async(req, res)=>{
                 mensaje:'id invalido'
             })
         }
-        const menu = await Menu.findByIdAndUpdate(id,{nombre, estado, precio, detalle, categoria: categoriaID},{new:true})
+        const menu = await Menu.findByIdAndUpdate(id,{nombre, estado, precio, detalle, categoria},{new:true})
         if(!menu){
             return res.status(404).json({
                 mensaje:'menu no encontrado'
