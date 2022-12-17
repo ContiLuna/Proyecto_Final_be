@@ -5,6 +5,8 @@ require("dotenv").config();
 const app = express();
 const conectarDB = require("./database/db");
 const cloudinary= require("cloudinary").v2
+const router = require("./routes/index");
+
 
 //middleware
 app.use(cors());
@@ -12,6 +14,8 @@ app.options("*", cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(morgan("dev"));
+
+app.use("/", router);
 
 const port = process.env.PORT;
 
