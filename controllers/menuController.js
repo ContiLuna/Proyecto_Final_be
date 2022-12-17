@@ -1,4 +1,5 @@
 const Menu = require('../models/MenuSchema');
+const Categoria = require('../models/CategoriaSchema');
 const mongoose = require('mongoose');
 
 
@@ -52,7 +53,10 @@ const createMenu = async (req, res) => {
     const { path } = req.file;                             // destructuring para obtener la ruta de la imagen 
     const menuExist = await Menu.findOne({nombre});
     const cloudImg = await cloudinary.uploader.upload(path);
-    //console.log("cloudImg", cloudImg)
+    const categoriaID = await Categoria.findById(categoria);
+
+
+    console.log("cloudImg", cloudImg)
     console.log("req.file", req.file)
     try {
         if(menuExist) {
@@ -61,13 +65,13 @@ const createMenu = async (req, res) => {
             })
         }
 
-        const newMenu = new Product({
+        const newMenu = new Menu({
             nombre, 
             estado,
             precio,
             detalle,
             image: cloudImg.secure_url,
-            categoria
+            categoria: categoriaID
         })
 
         await newMenu.save()
@@ -86,7 +90,8 @@ const createMenu = async (req, res) => {
 //update menu
 const updateMenu = async(req, res)=>{
     const {id} = req.params;
-    const {nombre, estado,precio, detalle} = req.body;  
+    const {nombre, estado,precio, detalle, categoria} = req.body; 
+    const categoriaID = await Categoria.findById(categoria); 
 
     try {
         if(!mongoose.isValidObjectId(id)){
@@ -94,7 +99,7 @@ const updateMenu = async(req, res)=>{
                 mensaje:'id invalido'
             })
         }
-        const menu = await Menu.findByIdAndUpdate(id,{nombre, estado, precio, detalle},{new:true})
+        const menu = await Menu.findByIdAndUpdate(id,{nombre, estado, precio, detalle, categoria: categoriaID},{new:true})
         if(!menu){
             return res.status(404).json({
                 mensaje:'menu no encontrado'

@@ -69,7 +69,7 @@ const createCategory = async (req, res) => {
         await newCategory.save()
 
         return res.status(201).json({
-            mensaje: "menu creado",
+            mensaje: "Categoria creada",
             newCategory
         });
 
