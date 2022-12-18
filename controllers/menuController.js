@@ -1,7 +1,7 @@
 const Menu = require('../models/MenuSchema');
 const Categoria = require('../models/CategoriaSchema');
 const mongoose = require('mongoose');
-
+const cloudinary= require("cloudinary").v2
 
 const getMenu = async(req, res)=>{ // trae todos los menus
     // traer todos los menus
