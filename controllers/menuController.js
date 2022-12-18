@@ -69,7 +69,7 @@ const createMenu = async (req, res) => {
             estado,
             precio,
             detalle,
-            image: cloudImg.secure_url,
+            imagen: cloudImg.secure_url,
             categoria
         })
 
