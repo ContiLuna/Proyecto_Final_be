@@ -2,7 +2,9 @@ const User = require('../models/UserSchema')
 const mongoose = require('mongoose');
 const { encryptPassword, comparePassword } = require('../utils/passwordencript');
 const jwt = require("jsonwebtoken");
+
 const sendEmail = require('../utils/emailHandler');
+
 
 const getAllUSers = async (req, res) => {
 
@@ -74,7 +76,6 @@ const createUser = async (req, res) => {
             mensaje: 'usuario creado',
             user: newUser
         })
-
 
     } catch (error) {
         console.log(error)
