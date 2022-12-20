@@ -88,6 +88,59 @@ const createMenu = async (req, res) => {
     }
 }
 
+//actualizar estado del menu
+const updateEstadoMenu = async(req, res)=>{
+    const {id} = req.params;
+    const {estado} = req.body;
+    try {
+        if(!mongoose.isValidObjectId(id)){
+            return res.status(404).json({
+                mensaje:'id invalido'
+            })
+        }
+        const menu = await Menu.findByIdAndUpdate
+        (id,{estado},{new:true})
+        if(!menu){
+            return res.status(404).json({
+                mensaje:'menu no encontrado'
+            })
+        }
+
+        res.status(200).json({
+            mensaje:'menu actualizado',
+            menu
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+//poner menu en sugerido
+const updateSugeridoMenu = async(req, res)=>{
+    const {id} = req.params;
+    const {sugerido} = req.body;
+    try {
+        if(!mongoose.isValidObjectId(id)){
+            return res.status(404).json({
+                mensaje:'id invalido'
+            })
+        }
+        const menu = await Menu.findByIdAndUpdate
+        (id,{sugerido},{new:true})
+        if(!menu){
+            return res.status(404).json({
+                mensaje:'menu no encontrado'
+            })
+        }
+
+        res.status(200).json({
+            mensaje:'menu actualizado',
+            menu
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 //update menu
 const updateMenu = async(req, res)=>{
@@ -145,5 +198,7 @@ module.exports = {
     getMenuByID,
     createMenu,
     updateMenu,
-    deleteMenu
+    deleteMenu,
+    updateEstadoMenu,
+    updateSugeridoMenu
 }

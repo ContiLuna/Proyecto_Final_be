@@ -11,11 +11,12 @@ const PedidoSchema = new mongoose.Schema({
         type:Date,
         default:Date.now,
     },
-    menu:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:Menu,
-
-    },
+    menu:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:Menu,
+        }
+    ],
     estado:{
         type:String,
         default:'pendiente',
