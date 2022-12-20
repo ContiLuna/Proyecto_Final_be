@@ -3,7 +3,10 @@ const express = require("express");
 const morgan = require("morgan");
 require("dotenv").config();
 const app = express();
-// const conectarDB = require("./database/db");
+const conectarDB = require("./database/db");
+const cloudinary= require("cloudinary").v2
+const router = require("./routes/index");
+
 
 //middleware
 app.use(cors());
@@ -12,15 +15,24 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(morgan("dev"));
 
+app.use("/", router);
+
 const port = process.env.PORT;
 
 app.get("/",(req, res)=>{
     return res.send("holiwi")
 })
 
+cloudinary.config({ 
+  cloud_name: process.env.CLOUD_NAME, 
+  api_key: process.env.APY_KEY, 
+  api_secret: process.env.API_SECRET,
+});
+
 //ejecutar conexcion a DB
-// conectarDB();
+conectarDB();
 
 app.listen(port, () => {
   console.log(`mi servidor esta funcionando en el puerto ${port}`);
 });
+

@@ -29,8 +29,8 @@ const MenuSchema = new mongoose.Schema({
         required:true,
     },
     categoria:{
-        type:String, // validacion de categoria, solo texto
-        // require:true,
+        type:String, 
+        require:true,
         trim:true
     }
 })
