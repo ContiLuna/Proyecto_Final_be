@@ -1,10 +1,13 @@
-const Menu = require('../models/menuModel');
+const Menu = require('../models/MenuSchema');
+const Categoria = require('../models/CategoriaSchema');
 const mongoose = require('mongoose');
+const cloudinary= require("cloudinary").v2
 
-
-const getMenu = async(req, res)=>{ // trae todos los menus
-    // traer todos los menus
-    const menus = await Menu.find();
+const getMenu = async(req, res)=>{
+    const page = req.query.page || 1;
+    const perPage = 5;
+    const skip = (page - 1) * perPage;
+    const menus = await Menu.find().skip(skip).limit(perPage);
     try {
         if(!menus){
             return res.status(404).json({
@@ -24,6 +27,7 @@ const getMenu = async(req, res)=>{ // trae todos los menus
         })
     }
 }
+
 
 // traer menu por Id
 const getMenuByID = async(req, res)=>{
@@ -48,11 +52,13 @@ const getMenuByID = async(req, res)=>{
 
 // crear menu
 const createMenu = async (req, res) => {
-    const { nombre,estado ,  precio, detalle } = req.body; // destructuring sin la imagen porque viene en un fil
+    const { nombre, estado, precio, detalle, categoria } = req.body; // destructuring sin la imagen porque viene en un fil
     const { path } = req.file;                             // destructuring para obtener la ruta de la imagen 
     const menuExist = await Menu.findOne({nombre});
     const cloudImg = await cloudinary.uploader.upload(path);
-    //console.log("cloudImg", cloudImg)
+
+
+    console.log("cloudImg", cloudImg)
     console.log("req.file", req.file)
     try {
         if(menuExist) {
@@ -61,12 +67,13 @@ const createMenu = async (req, res) => {
             })
         }
 
-        const newMenu = new Product({
+        const newMenu = new Menu({
             nombre, 
             estado,
             precio,
             detalle,
-            image: cloudImg.secure_url
+            imagen: cloudImg.secure_url,
+            categoria
         })
 
         await newMenu.save()
@@ -85,7 +92,7 @@ const createMenu = async (req, res) => {
 //update menu
 const updateMenu = async(req, res)=>{
     const {id} = req.params;
-    const {nombre, estado,precio, detalle} = req.body;  
+    const {nombre, estado,precio, detalle, categoria} = req.body; 
 
     try {
         if(!mongoose.isValidObjectId(id)){
@@ -93,7 +100,7 @@ const updateMenu = async(req, res)=>{
                 mensaje:'id invalido'
             })
         }
-        const menu = await Menu.findByIdAndUpdate(id,{nombre, estado, precio, detalle},{new:true})
+        const menu = await Menu.findByIdAndUpdate(id,{nombre, estado, precio, detalle, categoria},{new:true})
         if(!menu){
             return res.status(404).json({
                 mensaje:'menu no encontrado'
