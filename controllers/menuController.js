@@ -5,7 +5,7 @@ const cloudinary= require("cloudinary").v2
 
 const getMenu = async(req, res)=>{
     const page = req.query.page || 1;
-    const perPage = 10;
+    const perPage = 5;
     const skip = (page - 1) * perPage;
     const menus = await Menu.find().skip(skip).limit(perPage);
     try {
