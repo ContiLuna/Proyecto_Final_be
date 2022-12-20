@@ -3,9 +3,11 @@ const Categoria = require('../models/CategoriaSchema');
 const mongoose = require('mongoose');
 const cloudinary= require("cloudinary").v2
 
-const getMenu = async(req, res)=>{ // trae todos los menus
-    // traer todos los menus
-    const menus = await Menu.find();
+const getMenu = async(req, res)=>{
+    const page = req.query.page || 1;
+    const perPage = 5;
+    const skip = (page - 1) * perPage;
+    const menus = await Menu.find().skip(skip).limit(perPage);
     try {
         if(!menus){
             return res.status(404).json({
@@ -25,6 +27,7 @@ const getMenu = async(req, res)=>{ // trae todos los menus
         })
     }
 }
+
 
 // traer menu por Id
 const getMenuByID = async(req, res)=>{
