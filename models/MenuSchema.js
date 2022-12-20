@@ -32,6 +32,10 @@ const MenuSchema = new mongoose.Schema({
         type:String, 
         require:true,
         trim:true
+    },
+    sugerido: {
+        type: Boolean,
+        default: false,
     }
 })
 

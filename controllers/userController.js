@@ -2,6 +2,7 @@ const User = require('../models/UserSchema')
 const mongoose = require('mongoose');
 const { encryptPassword, comparePassword } = require('../utils/passwordencript');
 const jwt = require("jsonwebtoken");
+const sendEmail = require('../utils/emailHandler');
 
 const getAllUSers = async (req, res) => {
 
@@ -67,11 +68,13 @@ const createUser = async (req, res) => {
             password: encryptPassword(password),
             rol
         })
+        sendEmail(newUser);
         await newUser.save();
         res.status(200).json({
             mensaje: 'usuario creado',
             user: newUser
         })
+
 
     } catch (error) {
         console.log(error)
