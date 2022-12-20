@@ -14,7 +14,7 @@ const authenticateAdmin = (req, res, next) => {
                 mensaje: "Usuario no encontrado"
             })
         }
-        if(user.role !== "admin"){
+        if(user.rol !== "admin"){
             return res.status(401).json({
                 mensaje: "Usuario no autorizado, necesitas ser administrador"
             })
