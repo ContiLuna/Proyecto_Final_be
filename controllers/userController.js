@@ -50,7 +50,7 @@ const getUserByID = async (req, res) => {
 
 const createUser = async (req, res) => {
 
-    const { nombre, email, password } = req.body;
+    const { nombre, email, password, rol } = req.body;
 
     const user = await User.findOne({ email })
 
@@ -64,7 +64,8 @@ const createUser = async (req, res) => {
         const newUser = new User({
             nombre,
             email,
-            password: encryptPassword(password)
+            password: encryptPassword(password),
+            rol
         })
         await newUser.save();
         res.status(200).json({

@@ -20,7 +20,7 @@ router.post('/login', login);
 // rutas para menu
 router.get('/menu', getMenu);
 router.get('/menu/:id', getMenuByID);
-router.post('/menu', authenticateAdmin, upload.single("image"), createMenu);
+router.post('/menu', authenticateAdmin, upload.single("imagen"), createMenu);
 router.delete('/menu/:id', authenticateAdmin, deleteMenu);
 router.put('/menu/:id', authenticateAdmin, updateMenu);
 
