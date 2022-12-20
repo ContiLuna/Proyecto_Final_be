@@ -75,7 +75,6 @@ const createUser = async (req, res) => {
             user: newUser
         })
 
-
     } catch (error) {
         console.log(error)
     }
