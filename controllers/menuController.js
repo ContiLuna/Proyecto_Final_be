@@ -28,6 +28,28 @@ const getMenu = async(req, res)=>{
     }
 }
 
+const getAllMenu = async(req, res)=>{
+    const menus = await Menu.find();
+    try {
+        if(!menus){
+            return res.status(404).json({
+                mensaje:'no se encontro menu',
+                status:404
+            })
+        }
+        return res.status(200).json({
+            mensaje:'menus encontrados',
+            status:200,
+            menus
+        })
+    } catch (error) {
+        return res.status(500).json({
+            error,
+            mensaje:'error en el servidor',
+        })
+    }
+}
+
 
 // traer menu por Id
 const getMenuByID = async(req, res)=>{
@@ -200,5 +222,6 @@ module.exports = {
     updateMenu,
     deleteMenu,
     updateEstadoMenu,
-    updateSugeridoMenu
+    updateSugeridoMenu,
+    getAllMenu
 }

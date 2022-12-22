@@ -2,7 +2,9 @@ const User = require('../models/UserSchema')
 const mongoose = require('mongoose');
 const { encryptPassword, comparePassword } = require('../utils/passwordencript');
 const jwt = require("jsonwebtoken");
+
 const sendEmail = require('../utils/emailHandler');
+
 
 const getAllUSers = async (req, res) => {
 
@@ -170,6 +172,34 @@ const login = async (req, res) => {
     }
 }
 
+const cambiarEstadoUsuario = async (req, res) => {
+    const { id } = req.params;
+    const { estado } = req.body;
+    const user = await User.findById(id);
+    console.log("id", id)
+    console.log("estado", estado)
+    console.log("user", user)
+    try {
+        if (!mongoose.isValidObjectId(id)) {
+            return res.status(404).json({
+                mensaje: 'id invalido'
+            })
+        }
+        if (!user) {
+            return res.status(404).json({
+                mensaje: 'usuario no encontrado'
+            })
+        }
+        const userUpdated = await User.findByIdAndUpdate(id, { estado
+        }, { new: true })
+        res.status(200).json({
+            mensaje: 'usuario actualizado',
+            userUpdated
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 
 module.exports = {
@@ -179,6 +209,7 @@ module.exports = {
     createUser, // create un usuario
     deleteUser, // delete un usuario
     updateUser, // update un usuario
-    login // login de usuario
+    login, // login de usuario
+    cambiarEstadoUsuario // cambiar estado de usuario
 }
 

@@ -4,9 +4,9 @@ const authenticateAdmin = require('../middleware/authAdmin');
 const authenticateUser = require('../middleware/authUser');
 
 
-const {getAllUSers, getUserByID, createUser, deleteUser, updateUser, login} = require('../controllers/userController');
-const {getMenu, getMenuByID, createMenu, deleteMenu, updateMenu, updateEstadoMenu, updateSugeridoMenu} = require('../controllers/menuController');
-const {getPedido, getPedidoByID, createPedido, deletePedido, updatePedido, updateEstadoPedido} = require('../controllers/pedidoController');
+const {getAllUSers, getUserByID, createUser, deleteUser, updateUser, login, cambiarEstadoUsuario} = require('../controllers/userController');
+const {getMenu, getMenuByID, createMenu, deleteMenu, updateMenu, updateEstadoMenu, updateSugeridoMenu, getAllMenu} = require('../controllers/menuController');
+const {getPedidoByID, createPedido, deletePedido, updatePedido, updateEstadoPedido, getPedidos} = require('../controllers/pedidoController');
 const {getAllCategories, getCategoryByID, createCategory, deleteCategory, updateCategory} = require('../controllers/categoriaController');
 
 // rutas para usuarios
@@ -16,18 +16,19 @@ router.post('/register', createUser);
 router.delete('/user/:id', authenticateUser, deleteUser);
 router.put('/user/:id', authenticateUser, updateUser);
 router.post('/login', login);
+router.patch('/user/:id', cambiarEstadoUsuario); //actualizar estado del usuario
 
 // rutas para menu
-router.get('/menu', getMenu);
+router.get('/menu', getAllMenu);
 router.get('/menu/:id', getMenuByID);
 router.post('/menu', authenticateAdmin, upload.single("imagen"), createMenu);
-router.delete('/menu/:id', authenticateAdmin, deleteMenu);
-router.put('/menu/:id', authenticateAdmin, updateMenu);
-router.patch('/menu/:id', authenticateAdmin, updateEstadoMenu); //actualizar estado del menu
+router.delete('/menu/:id', deleteMenu);
+router.put('/menu/:id', updateMenu);
+router.patch('/menu/:id', updateEstadoMenu); //actualizar estado del menu
 router.patch('/menu/sugerido/:id', authenticateAdmin, updateSugeridoMenu); //actualizar si el menu se vera en sugeridos
 
 // rutas para pedidos
-// router.get('/pedido', getPedido);
+router.get('/pedido', getPedidos);
 router.get('/pedido/:id', authenticateUser, getPedidoByID);
 router.post('/pedido', authenticateUser, createPedido);
 router.delete('/pedido/:id', authenticateUser, deletePedido);
