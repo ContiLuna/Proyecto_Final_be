@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const getPedidos = async (req, res) => {
   // trae todos los pedidos
   // traer todos los pedidos
-  const pedidos = await Pedido.find();
+  const pedidos = await Pedido.find().populate("usuario").populate("menu");
   try {
     if (!pedidos) {
       return res.status(404).json({
