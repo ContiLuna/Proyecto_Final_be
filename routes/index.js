@@ -26,7 +26,6 @@ router.put('/menu/:id', authenticateAdmin, updateMenu);
 router.patch('/menu/:id', authenticateAdmin, updateEstadoMenu); //actualizar estado del menu
 router.patch('/menu/sugerido/:id', authenticateAdmin, updateSugeridoMenu); //actualizar si el menu se vera en sugeridos
 
-
 // rutas para pedidos
 // router.get('/pedido', getPedido);
 router.get('/pedido/:id', authenticateUser, getPedidoByID);
