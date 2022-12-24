@@ -79,9 +79,6 @@ const createMenu = async (req, res) => {
     const menuExist = await Menu.findOne({nombre});
     const cloudImg = await cloudinary.uploader.upload(path);
 
-
-    console.log("cloudImg", cloudImg)
-    console.log("req.file", req.file)
     try {
         if(menuExist) {
             return res.status(400).json({

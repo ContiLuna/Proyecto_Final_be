@@ -159,8 +159,6 @@ const login = async (req, res) => {
         const token = jwt.sign(payload, secret, {
             algorithm: process.env.JWT_ALGORTIHM
         });
-
-        console.log("token", token)
         
         return res.status(200).json({
             mensaje: "Usuario logueado con exito",
@@ -176,9 +174,6 @@ const cambiarEstadoUsuario = async (req, res) => {
     const { id } = req.params;
     const { estado } = req.body;
     const user = await User.findById(id);
-    console.log("id", id)
-    console.log("estado", estado)
-    console.log("user", user)
     try {
         if (!mongoose.isValidObjectId(id)) {
             return res.status(404).json({
