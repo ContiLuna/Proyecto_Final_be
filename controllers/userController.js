@@ -8,24 +8,23 @@ const sendEmail = require('../utils/emailHandler');
 
 const getAllUSers = async (req, res) => {
 
-
     const users = await User.find();
     try {
         if (!users) {
             return res.status(404).json({
-                mensaje: 'no se encontro usuario',
+                mensaje: 'No se encontraron usuarios',
                 status: 404
             })
         }
-        return res.status(200).json({
-            mensaje: 'usuarios encontrados',
-            status: 200,
-            users
-        })
+            return res.status(200).json({
+                mensaje: 'Usuarios encontrados',
+                status: 200,
+                users
+            })
     } catch (error) {
         return res.status(500).json({
             error,
-            mensaje: 'error en el servidor',
+            mensaje: 'Error en el servidor',
         })
     }
 }
@@ -53,7 +52,7 @@ const getUserByID = async (req, res) => {
 
 const createUser = async (req, res) => {
 
-    const { nombre, email, password, rol } = req.body;
+    const { nombre, email, password, passwordConfirmation, rol } = req.body;
 
     const user = await User.findOne({ email })
 
@@ -62,6 +61,12 @@ const createUser = async (req, res) => {
             return res.status(400).json({
                 mensaje: 'usuario ya existe'
             })
+        }
+
+        if (password !== passwordConfirmation) {
+            return res.status(400).json({
+                mensaje: 'Las contraseñas no coinciden'
+            });
         }
 
         const newUser = new User({
@@ -117,7 +122,7 @@ const updateUser = async (req, res) => {
                 mensaje: 'id invalido'
             })
         }
-        const user = await User.findByIdAndUpdate(id, { nombre, email, password }, { new: true })
+        const user = await User.findByIdAndUpdate(id, { nombre, email, password: encryptPassword(password) }, { new: true })
         if (!user) {
             return res.status(404).json({
                 mensaje: 'usuario no encontrado'
