@@ -10,7 +10,7 @@ const {getPedidoByID, createPedido, deletePedido, updatePedido, updateEstadoPedi
 const {getAllCategories, getCategoryByID, createCategory, deleteCategory, updateCategory} = require('../controllers/categoriaController');
 
 // rutas para usuarios
-router.get('/alluser', getAllUSers);
+router.get('/alluser', authenticateAdmin, getAllUSers);
 router.get('/user/:id', authenticateUser, getUserByID);
 router.post('/register', createUser);
 router.delete('/user/:id', authenticateUser, deleteUser);
