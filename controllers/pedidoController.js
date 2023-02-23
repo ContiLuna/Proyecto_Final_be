@@ -48,13 +48,15 @@ const getPedidoByID = async (req, res) => {
 // crear un pedido
 // crear menu
 const createPedido = async (req, res) => {
-  const { usuario, fecha, menu, pedido } = req.body;
+  const { usuario, fecha,cantidad, menu, pedido } = req.body;
 
   try {
     const newPedido = new Pedido({
       usuario,
       fecha,
       menu,
+      cantidad,
+      estado: "pendiente",
       pedido,
     });
 

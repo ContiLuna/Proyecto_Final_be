@@ -17,6 +17,9 @@ const PedidoSchema = new mongoose.Schema({
             ref:Menu,
         }
     ],
+    cantidad:{
+        type:Number,
+    },
     estado:{
         type:String,
         default:'pendiente',
