@@ -17,14 +17,14 @@ const PedidoSchema = new mongoose.Schema({
             ref:Menu,
         }
     ],
-    cantidad:{
-        type:Number,
-    },
     estado:{
         type:String,
         default:'pendiente',
         enum:['pendiente', 'confirmado', 'cancelado']
     },
+    monto:{
+        type:Number
+    }
 })
 
 const Pedido = mongoose.model('Pedido', PedidoSchema);

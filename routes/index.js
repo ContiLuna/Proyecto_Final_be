@@ -6,7 +6,7 @@ const authenticateUser = require('../middleware/authUser');
 
 const {getAllUSers, getUserByID, createUser, deleteUser, updateUser, login, cambiarEstadoUsuario} = require('../controllers/userController');
 const {getMenu, getMenuByID, createMenu, deleteMenu, updateMenu, updateEstadoMenu, updateSugeridoMenu, getAllMenu} = require('../controllers/menuController');
-const {getPedidoByID, createPedido, deletePedido, updatePedido, updateEstadoPedido, getPedidos} = require('../controllers/pedidoController');
+const {getPedidoByID, createPedido, deletePedido, updatePedido, updateEstadoPedido, getPedidos, getPedidosByUser} = require('../controllers/pedidoController');
 const {getAllCategories, getCategoryByID, createCategory, deleteCategory, updateCategory} = require('../controllers/categoriaController');
 
 // rutas para usuarios
@@ -29,9 +29,10 @@ router.patch('/menu/sugerido/:id', authenticateAdmin, updateSugeridoMenu); //act
 
 // rutas para pedidos
 router.get('/pedido', getPedidos);
+router.get('/pedidos/user/:id', getPedidosByUser);
 router.get('/pedido/:id', authenticateUser, getPedidoByID);
 router.post('/pedido', createPedido);
-router.delete('/pedido/:id', authenticateUser, deletePedido);
+router.delete('/pedido/:id', deletePedido);
 router.put('/pedido/:id',authenticateUser , updatePedido);
 router.patch('/pedido/:id',authenticateAdmin , updateEstadoPedido); // actualizar estado del pedido
 

@@ -25,6 +25,35 @@ const getPedidos = async (req, res) => {
   }
 };
 
+const getPedidosByUser = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const pedidos = await Pedido.find({ usuario: id })
+      .populate("usuario")
+      .populate("menu")
+      .sort({ fecha: -1 });
+
+    if (pedidos.length === 0) {
+      return res.status(404).json({
+        mensaje: "no se encontraron pedidos para este usuario",
+        status: 404,
+      });
+    }
+
+    return res.status(200).json({
+      mensaje: "pedidos encontrados",
+      status: 200,
+      pedidos,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error,
+      mensaje: "error en el servidor",
+    });
+  }
+};
+
 // traer pedido por Id
 const getPedidoByID = async (req, res) => {
   const { id } = req.params;
@@ -48,7 +77,7 @@ const getPedidoByID = async (req, res) => {
 // crear un pedido
 // crear menu
 const createPedido = async (req, res) => {
-  const { usuario, fecha,cantidad, menu, pedido } = req.body;
+  const { usuario, fecha,cantidad, menu, pedido, monto } = req.body;
 
   try {
     const newPedido = new Pedido({
@@ -58,6 +87,7 @@ const createPedido = async (req, res) => {
       cantidad,
       estado: "pendiente",
       pedido,
+      monto
     });
 
     await newPedido.save();
@@ -160,5 +190,6 @@ module.exports = {
   createPedido,
   updatePedido,
   deletePedido,
-  updateEstadoPedido
+  updateEstadoPedido,
+  getPedidosByUser
 };
